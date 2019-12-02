@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const userOutput = (props) => {
   return (
     <div>
       <p>{props.username}</p>
-      <p>Text2</p>
     </div>
   );
 }

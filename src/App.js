@@ -1,32 +1,52 @@
 import React, { Component } from 'react';
-import UserOutput from './UserOutput/UserOutput';
-import UserInput from './UserInput/UserInput';
+import UserSection from './UserSection/UserSection';
 import './App.css';
 
 class App extends Component {
   state = {
-    username: 'Daro'
+    persons: [
+      { id: '1', username: 'Daro' },
+      { id: '2', username: 'Patryk' },
+      { id: '3', username: 'Krzychu' }
+    ],
+    showPersons: false
   };
 
-  changeNameHandler = (event) => {
+  changeNameHandler = (personId, event) => {
+    let persons = [...this.state.persons];
+    persons.find(person => person.id === personId).username = event.target.value;
     this.setState({
-      username: event.target.value
+      persons
     });
   };
+
+  toggleHandler = () => {
+    this.setState({
+      showPersons: !this.state.showPersons
+    })
+  }
+
   render() {
-    const style = {
-      border: '1px solid #eee',
-      boxShadow: '0 2px 5px #ccc',
-      margin: '10px auto',
-      color: '#fe9e76'
-    };
+    let personElements = null;
+    if (this.state.showPersons) {
+      personElements = (
+        <div>
+          {this.state.persons.map(person =>
+              <UserSection
+                username={person.username}
+                key={person.id}
+                onchange={this.changeNameHandler.bind(this, person.id)}
+              />
+          )}
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi there!</h1>
-        <div style={style}>
-          <UserOutput username={this.state.username} />
-          <UserInput onchange={this.changeNameHandler} username={this.state.username} />
-        </div>
+        <button onClick={this.toggleHandler}>Toggle</button>
+        {personElements}
       </div>
     );
   }
