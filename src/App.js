@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserSection from './UserSection/UserSection';
 import './App.css';
+import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
   state = {
@@ -28,7 +29,19 @@ class App extends Component {
 
   render() {
     let personElements = null;
+    let style = {
+      backgroundColor: '#8cba51',
+      ':hover': {
+        color: '#6D6E71'
+      }
+    };
+    let pClasses = [];
     if (this.state.showPersons) {
+      pClasses.push('no-bold');
+      if (this.state.persons.some(p => p.username === 'Darek')) {
+        pClasses.push('blue');
+      }
+      style.backgroundColor = '#f85c50';
       personElements = (
         <div>
           {this.state.persons.map(person =>
@@ -41,15 +54,18 @@ class App extends Component {
         </div>
       );
     }
-
     return (
-      <div className="App">
-        <h1>Hi there!</h1>
-        <button onClick={this.toggleHandler}>Toggle</button>
-        {personElements}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1 className={pClasses.join(' ')}>Hi there!</h1>
+          <button
+            style={style}
+            onClick={this.toggleHandler}>Toggle</button>
+          {personElements}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);

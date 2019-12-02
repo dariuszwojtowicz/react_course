@@ -1,6 +1,7 @@
 import React from 'react';
 import UserOutput from '../UserOutput/UserOutput';
 import UserInput from '../UserInput/UserInput';
+import Radium from 'radium';
 
 const userSection = (props) => {
   const style = {
@@ -8,7 +9,11 @@ const userSection = (props) => {
     boxShadow: '0 2px 3px #ccc',
     margin: '10px auto',
     padding: '16px',
-    color: '#fe9e76'
+    color: '#fe9e76',
+    width: '50%',
+    '@media (min-width: 1468px)': {
+      width: '700px'
+    }
   };
 
   return (
@@ -19,4 +24,4 @@ const userSection = (props) => {
   );
 }
 
-export default userSection;
+export default Radium(userSection);
