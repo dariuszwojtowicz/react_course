@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UserSection from './UserSection/UserSection';
 import './App.css';
 import Radium, {StyleRoot} from 'radium';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -45,11 +46,12 @@ class App extends Component {
       personElements = (
         <div>
           {this.state.persons.map(person =>
+            <ErrorBoundary key={person.id}>
               <UserSection
                 username={person.username}
-                key={person.id}
                 onchange={this.changeNameHandler.bind(this, person.id)}
               />
+            </ErrorBoundary>
           )}
         </div>
       );
