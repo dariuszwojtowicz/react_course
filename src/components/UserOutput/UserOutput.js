@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
 
 const userOutput = (props) => {
   return (
-    <StyledDiv alt={true}>
+    <StyledDiv alt={'true'}>
       <p>{props.username}</p>
     </StyledDiv>
   );
