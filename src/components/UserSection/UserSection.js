@@ -2,6 +2,7 @@ import React, { useEffect }  from 'react';
 import UserOutput from '../UserOutput/UserOutput';
 import UserInput from '../UserInput/UserInput';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledDiv = styled.div`
   border: 1px solid #eee;
@@ -29,5 +30,11 @@ const userSection = (props) => {
     </StyledDiv>
   );
 }
+
+userSection.propTypes = {
+  conn: PropTypes.number,
+  username: PropTypes.string,
+  onChange: PropTypes.func
+};
 
 export default userSection;
