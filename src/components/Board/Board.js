@@ -2,19 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 const board = (props) => {
   let [points, setPoints] = useState(0);
-  let [current, setCurrent] = useState(Math.floor(Math.random() * 101));
+  let [current, setCurrent] = useState(102);
   let [isOn, setIsOn] = useState(0);
   let [int, setInt] = useState();
+  let [timer, setTimer] = useState(props.time);
 
   // let interval;
   const divIds = [];
-  let timer = props.time;
   for (let i = 1; i <= 100; i++) {
     divIds.push(i);
-  }
-
-  const countDown = () => {
-      timer--;
   }
 
   useEffect(() => {
@@ -23,20 +19,35 @@ const board = (props) => {
       if (int) {
         clearInterval(int);
       }
-      let interval = setInterval(countDown, 1000);
+      let interval = setInterval(() => {
+        setTimer((prevState) => {
+          setTimer(prevState - 1);
+        });
+      }, 1000);
       setInt(interval);
     }
   }, [points, isOn]);
 
+  useEffect(() => {
+    if (timer < 0) {
+      clearInterval(int);
+      if (window.confirm('You lost! Do you want to play again?')) {
+        window.location.reload();
+      }
+    }
+  }, [timer]);
+
   const divClicked = (divId) => {
     if (divId === current) {
       setCurrent(Math.floor(Math.random() * 101));
+      setTimer(props.time);
       setPoints(points + 1);
     }
   }
 
   const startGame = () => {
     setIsOn(1);
+    setCurrent(Math.floor(Math.random() * 101));
   }
 
   return (
@@ -54,7 +65,7 @@ const board = (props) => {
               onClick={divClicked.bind(this, divId)}
               key={divId}
               style={{
-                backgroundColor: divId === current ? 'red' : 'white'
+                backgroundColor: divId === current ? 'grey' : 'white'
               }}
             ></div>;
           })

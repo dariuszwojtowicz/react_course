@@ -4,7 +4,7 @@ import Board from './components/Board/Board';
 
 class App extends Component {
   state = {
-    time: 10,
+    time: 1,
     points: 0
   }
 
