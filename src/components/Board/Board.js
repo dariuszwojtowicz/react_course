@@ -30,8 +30,9 @@ const board = (props) => {
 
   useEffect(() => {
     if (timer < 0) {
+      setTimer(0);
       clearInterval(int);
-      if (window.confirm('You lost! Do you want to play again?')) {
+      if (window.confirm(`Game Over! Your result is ${points} points. Do you want to play again?`)) {
         window.location.reload();
       }
     }
@@ -64,10 +65,8 @@ const board = (props) => {
             return <div
               onClick={divClicked.bind(this, divId)}
               key={divId}
-              style={{
-                backgroundColor: divId === current ? 'grey' : 'white'
-              }}
-            ></div>;
+              style={{color: '#E8D5D5'}}
+            >{divId === current ? '|' : ''}</div>;
           })
         }
       </div>

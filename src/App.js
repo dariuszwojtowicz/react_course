@@ -22,12 +22,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Hi there! You have {this.state.time} seconds to catch The Div!</h1>
-        <input
-          type="text"
-          value={this.state.time}
-          onChange={this.resetGame}
-          />
+        <h1>Hi there! You have {this.state.time} seconds to catch The Line!</h1>        
         <Board time={this.state.time} />
       </div>
     );
