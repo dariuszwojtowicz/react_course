@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserSection from './components/UserSection/UserSection';
 import UsersCount from './components/UsersCount/UsersCount';
+import SampleContext from './contexts/SampleContext';
 import './App.css';
 import styled from 'styled-components';
 
@@ -30,7 +31,10 @@ class App extends Component { // extends PureComponent
   constructor(props) {
     super(props);
     console.log('App.js Constructor');
+    this.inputElementRef = React.createRef();
   }
+
+  static contextType = SampleContext;
 
   state = {
     persons: [
@@ -74,7 +78,9 @@ class App extends Component { // extends PureComponent
   toggleHandler = () => {
     this.setState({
       showPersons: !this.state.showPersons
-    })
+    });
+    this.inputElementRef.current.style['text-transform'] =
+      this.inputElementRef.current.style['text-transform'] === 'uppercase' ? 'lowercase' : 'uppercase';
   }
 
   render() {
@@ -100,11 +106,14 @@ class App extends Component { // extends PureComponent
     }
     return (
       <div className="App">
-        <h1 className={pClasses.join(' ')}>Hi there! {this.props.title}</h1>
+        <h1 ref={this.inputElementRef} className={pClasses.join(' ')}>Hi there! {this.props.title}</h1>
         <UsersCount usersCount={this.state.persons.length}/>
+        <p>{this.context.sample}</p>
         <StyledButton
           onClick={this.toggleHandler}>Toggle</StyledButton>
-        {personElements}
+        <SampleContext.Provider value={{sample: 'contextValue'}}>
+          {personElements}
+        </SampleContext.Provider>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React, { useEffect, useRef }  from 'react';
 import UserOutput from '../UserOutput/UserOutput';
 import UserInput from '../UserInput/UserInput';
 import styled from 'styled-components';
@@ -14,10 +14,11 @@ const StyledDiv = styled.div`
 
 const userSection = (props) => {
   console.log('UserSection.js render', props.conn);
+  const pRef = useRef(null);
 
   useEffect(() => {
       console.log('UserSection.js useEffect');
-
+      pRef.current.style.color = pRef.current.style.color === 'green' ? 'pink' : 'green';
       return () => {
         console.log('UserSection.js cleanup in useEffect');
       }
@@ -26,6 +27,7 @@ const userSection = (props) => {
   return (
     <StyledDiv>
       <UserOutput username={props.username} />
+      <p ref={pRef}>Change name here: </p>
       <UserInput onchange={props.onchange} username={props.username} />
     </StyledDiv>
   );
